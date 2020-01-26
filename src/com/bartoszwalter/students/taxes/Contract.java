@@ -52,6 +52,10 @@ public abstract class Contract {
 	abstract String getName();
 
 	abstract void calculateTax();
+	abstract double calculateIncomeCost();
+
+	abstract void calculateSalary();
+
 
 	double calculatePensionTax(){
 		return income * 0.0976;
@@ -78,10 +82,6 @@ public abstract class Contract {
 	double calculateHealthInsuranceTaxOfficePart(double healthInsuranceBasis){
 		return healthInsuranceBasis * 0.09;
 	}
-
-	abstract double calculateIncomeCost();
-
-	abstract void calculateSalary();
 	
 	private double calculateAdvanceTax(double basis){
 		return basis * 0.18;
