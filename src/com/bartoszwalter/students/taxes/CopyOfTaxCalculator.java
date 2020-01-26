@@ -85,7 +85,7 @@ public class CopyOfTaxCalculator {
 		} else if (contractType == 'C') {
 			System.out.println("CIVIL CONTRACT");
 			System.out.println("Basis for taxes " + income);
-			double oBasis = colculatedBasis(income)
+			double oBasis = colculatedBasis(income);
 			System.out.println("Pension tax "
 					+ df00.format(t_pension));
 			System.out.println("Disability tax "

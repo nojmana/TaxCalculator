@@ -5,89 +5,109 @@ import java.util.HashMap;
 public abstract class Contract {
 	protected double income;
 
-	// social taxes
-	protected double pensionTax;
-	protected double disabilityTax;
-	protected double illnessInsurance;
-	
-	// health taxes
-	public double incomeCost;
-	public double healthInsuranceIncomePart;
-	public double healthInsuranceTaxOfficePart;
-	public double advanceTax;
-	public double exemptedValue;
-	public double advanceTaxOffice;
-	public double advanceTaxOffice0;
-	
+	private double incomeCost;
+	private double healthInsuranceIncomePart;
+	private double healthInsuranceTaxOfficePart;
+	private double advanceTax;
+	private long advanceTaxOffice;
+
 	Contract(double income){
 		this.income = income;
 	}
-	
+
+	abstract String getName();
+	abstract double calculateIncomeCost();
+	abstract double getExemptedValue();
+
 	public HashMap<String, Object> calculate(){
 		HashMap<String, Object> calculatedValues = new HashMap<>();
 		calculatedValues.put("Contract type", getName());
-
 		calculatedValues.put("Basis for taxes", income);
 
-		pensionTax = calculatePensionTax();
-		calculatedValues.put("Pension tax", pensionTax);
-		disabilityTax = calculateDisabilityTax();
-		calculatedValues.put("Disability tax", disabilityTax);
-		illnessInsurance = calculateIllnessInsurance();
-		calculatedValues.put("Illness insurance", illnessInsurance);
+		double socialTaxes = calculateSocialTaxes(calculatedValues);
 
-		double healthInsuranceBasis = calculateHealthInsuranceBasis();
-		calculatedValues.put("Health insurance basis", healthInsuranceBasis);
-		healthInsuranceIncomePart = calculateHealthInsuranceIncomePart(healthInsuranceBasis);
-		healthInsuranceTaxOfficePart = calculateHealthInsuranceTaxOfficePart(healthInsuranceBasis);
-		calculatedValues.put("Health insurance 9%", healthInsuranceIncomePart);
-		calculatedValues.put("Health insurance 7.75%", healthInsuranceTaxOfficePart);
+		double healthInsuranceAndTaxBasis = calculateHealthInsuranceBasis(socialTaxes);
+
+		calculateHealthInsurance(calculatedValues, healthInsuranceAndTaxBasis);
 
 		incomeCost = calculateIncomeCost();
 		calculatedValues.put("Constant income tax cost", incomeCost);
 
+		calculateAdvanceTaxes(calculatedValues, healthInsuranceAndTaxBasis);
+
+		double salary = calculateSalary(socialTaxes);
+		calculatedValues.put("Net salary", salary);
+
 		return calculatedValues;
 	}
 
-	abstract String getName();
+	private double calculateSocialTaxes(HashMap<String, Object> calculatedValues){
+		double pensionTax = calculatePensionTax();
+		calculatedValues.put("Pension tax", pensionTax);
+		double disabilityTax = calculateDisabilityTax();
+		calculatedValues.put("Disability tax", disabilityTax);
+		double illnessInsurance = calculateIllnessInsurance();
+		calculatedValues.put("Illness insurance", illnessInsurance);
 
-	abstract void calculateTax();
-	abstract double calculateIncomeCost();
+		return pensionTax + disabilityTax + illnessInsurance;
+	}
 
-	abstract void calculateSalary();
+	private void calculateHealthInsurance(HashMap<String, Object> calculatedValues, double healthInsuranceAndTaxBasis){
+		calculatedValues.put("Health insurance basis", healthInsuranceAndTaxBasis);
+		healthInsuranceIncomePart = calculateHealthInsuranceIncomePart(healthInsuranceAndTaxBasis);
+		healthInsuranceTaxOfficePart = calculateHealthInsuranceTaxOfficePart(healthInsuranceAndTaxBasis);
+		calculatedValues.put("Health insurance 9%", healthInsuranceIncomePart);
+		calculatedValues.put("Health insurance 7.75%", healthInsuranceTaxOfficePart);
+	}
 
+	private void calculateAdvanceTaxes(HashMap<String, Object> calculatedValues, double healthInsuranceAndTaxBasis){
+		long advanceTaxBasis = calculateAdvanceTaxBasis(healthInsuranceAndTaxBasis);
+		calculatedValues.put("Advance Tax basis", advanceTaxBasis);
+		advanceTax = calculateAdvanceTax(advanceTaxBasis);
+		calculatedValues.put("Advance for income tax", advanceTax);
+		advanceTaxOffice = calculateAdvanceTaxOffice();
+		calculatedValues.put("Advance for tax office", advanceTaxOffice);
+	}
 
-	double calculatePensionTax(){
+	private double calculatePensionTax(){
 		return income * 0.0976;
 	}
 
-	double calculateDisabilityTax(){
+	private double calculateDisabilityTax(){
 		return income * 0.015;
 	}
 
-	double calculateIllnessInsurance(){
+	private double calculateIllnessInsurance(){
 		return income * 0.0245;
 	}
 
-	double calculateHealthInsuranceBasis(){
-		return income - pensionTax - disabilityTax - illnessInsurance;
+	private double calculateHealthInsuranceBasis(double socialTaxes){
+		return income - socialTaxes;
 	}
 
 	//TODO think of rename
-	double calculateHealthInsuranceIncomePart(double healthInsuranceBasis){
+	private double calculateHealthInsuranceIncomePart(double healthInsuranceBasis){
 		return healthInsuranceBasis * 0.09;
 	}
 
 	//TODO think of rename
-	double calculateHealthInsuranceTaxOfficePart(double healthInsuranceBasis){
+	private double calculateHealthInsuranceTaxOfficePart(double healthInsuranceBasis){
 		return healthInsuranceBasis * 0.09;
 	}
-	
-	private double calculateAdvanceTax(double basis){
-		return basis * 0.18;
+
+	private long calculateAdvanceTaxBasis(double basis){
+		return Math.round(basis - incomeCost);
 	}
 
-	public double calculateAdvance() {
-		advanceTaxOffice = advanceTax - health2 - exemptedValue;
+	private double calculateAdvanceTax(long advanceTaxBasis){
+		return advanceTaxBasis * 0.18;
+	}
+
+	public long calculateAdvanceTaxOffice() {
+		return Math.round(advanceTax - healthInsuranceTaxOfficePart - getExemptedValue());
+	}
+
+	private double calculateSalary(double socialTaxes){
+		return income - (socialTaxes + healthInsuranceIncomePart + advanceTaxOffice);
 	}
 }
