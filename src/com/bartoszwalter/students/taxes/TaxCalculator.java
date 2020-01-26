@@ -11,12 +11,10 @@ public class TaxCalculator {
 		new Output(contract).print();
 	}
 
-	public static void calculateAdvance() {
-		advanceTaxOffice = advanceTax - t_health2 - exemptedValue;
-	}
+
 
 	public static void calculateBasis(double basis) {
-		advanceTax = (basis * 18) / 100;
+
 	}
 
 	

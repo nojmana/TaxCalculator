@@ -32,7 +32,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1580053286365</updated>
-      <workItem from="1580053302557" duration="387000" />
+      <workItem from="1580053302557" duration="4701000" />
     </task>
     <servers />
   </component>
@@ -40,21 +40,29 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="765" y="230" key="#com.intellij.ide.util.MemberChooser" timestamp="1580063260623">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="230" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1580063260623" />
     <state x="811" y="410" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1580053441981">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="811" y="410" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1580053441981" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1580053387720">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1580054311606">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1580053387720" />
-    <state x="461" y="163" key="SettingsEditor" timestamp="1580053405387">
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1580054311606" />
+    <state x="461" y="163" key="SettingsEditor" timestamp="1580054313965">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="163" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1580053405387" />
+    <state x="461" y="163" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1580054313965" />
     <state x="661" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1580053305233">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="661" y="345" key="com.intellij.ide.util.TipDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1580053305233" />
+    <state x="1920" y="0" width="1424" height="1025" maximized="true" key="dock-window-1" timestamp="1580059263406">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1920" y="0" width="1424" height="1025" maximized="true" key="dock-window-1/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1580059263406" />
   </component>
 </project>
