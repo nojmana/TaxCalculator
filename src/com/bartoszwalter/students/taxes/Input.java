@@ -32,7 +32,7 @@ public class Input {
     }
 
     private Contract setupContract(char contractTypeFirstCharacter, double income) throws Exception {
-        switch (contractTypeFirstCharacter) {
+        switch (Character.toUpperCase(contractTypeFirstCharacter)) {
             case 'C':
                 return new CivilContract(income);
             case 'O':
