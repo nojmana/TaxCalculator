@@ -3,9 +3,11 @@ package com.bartoszwalter.students.taxes;
 import java.util.HashMap;
 
 public abstract class Contract {
+
 	protected double income;
 
 	private double incomeCost;
+	private double healthInsuranceAndTaxBasis;
 	private double healthInsuranceIncomePart;
 	private double healthInsuranceTaxOfficePart;
 	private double advanceTax;
@@ -13,6 +15,10 @@ public abstract class Contract {
 
 	Contract(double income){
 		this.income = income;
+	}
+
+	public double getHealthInsuranceAndTaxBasis() {
+		return healthInsuranceAndTaxBasis;
 	}
 
 	abstract String getName();
@@ -26,14 +32,14 @@ public abstract class Contract {
 
 		double socialTaxes = calculateSocialTaxes(calculatedValues);
 
-		double healthInsuranceAndTaxBasis = calculateHealthInsuranceBasis(socialTaxes);
+		healthInsuranceAndTaxBasis = calculateHealthInsuranceBasis(socialTaxes);
 
 		calculateHealthInsurance(calculatedValues, healthInsuranceAndTaxBasis);
 
 		incomeCost = calculateIncomeCost();
 		calculatedValues.put("Constant income tax cost", incomeCost);
 
-		calculateAdvanceTaxes(calculatedValues, healthInsuranceAndTaxBasis);
+		calculateAdvanceTaxes(calculatedValues);
 
 		double salary = calculateSalary(socialTaxes);
 		calculatedValues.put("Net salary", salary);
@@ -55,14 +61,14 @@ public abstract class Contract {
 	private void calculateHealthInsurance(HashMap<String, Object> calculatedValues, double healthInsuranceAndTaxBasis){
 		calculatedValues.put("Health insurance basis", healthInsuranceAndTaxBasis);
 		healthInsuranceIncomePart = calculateHealthInsuranceIncomePart(healthInsuranceAndTaxBasis);
-		healthInsuranceTaxOfficePart = calculateHealthInsuranceTaxOfficePart(healthInsuranceAndTaxBasis);
 		calculatedValues.put("Health insurance 9%", healthInsuranceIncomePart);
+		healthInsuranceTaxOfficePart = calculateHealthInsuranceTaxOfficePart(healthInsuranceAndTaxBasis);
 		calculatedValues.put("Health insurance 7.75%", healthInsuranceTaxOfficePart);
 	}
 
-	private void calculateAdvanceTaxes(HashMap<String, Object> calculatedValues, double healthInsuranceAndTaxBasis){
-		long advanceTaxBasis = calculateAdvanceTaxBasis(healthInsuranceAndTaxBasis);
-		calculatedValues.put("Advance Tax basis", advanceTaxBasis);
+	private void calculateAdvanceTaxes(HashMap<String, Object> calculatedValues){
+		long advanceTaxBasis = calculateAdvanceTaxBasis();
+		calculatedValues.put("Advance tax basis", advanceTaxBasis);
 		advanceTax = calculateAdvanceTax(advanceTaxBasis);
 		calculatedValues.put("Advance for income tax", advanceTax);
 		advanceTaxOffice = calculateAdvanceTaxOffice();
@@ -95,8 +101,8 @@ public abstract class Contract {
 		return healthInsuranceBasis * 0.09;
 	}
 
-	private long calculateAdvanceTaxBasis(double basis){
-		return Math.round(basis - incomeCost);
+	private long calculateAdvanceTaxBasis(){
+		return Math.round(healthInsuranceAndTaxBasis - incomeCost);
 	}
 
 	private double calculateAdvanceTax(long advanceTaxBasis){

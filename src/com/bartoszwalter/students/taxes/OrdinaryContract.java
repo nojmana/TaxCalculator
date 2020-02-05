@@ -7,13 +7,13 @@ public class OrdinaryContract extends Contract {
 	}
 
 	@Override
-	double calculateIncomeCost() {
-		return 111.25;
+	String getName(){
+		return "Ordinary Contract";
 	}
 
 	@Override
-	String getName(){
-		return "Ordinary Contract";
+	double calculateIncomeCost() {
+		return 111.25;
 	}
 
 	@Override

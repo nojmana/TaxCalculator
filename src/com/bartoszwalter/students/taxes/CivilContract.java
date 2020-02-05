@@ -13,13 +13,11 @@ public class CivilContract extends Contract {
 
 	@Override
 	double calculateIncomeCost() {
-		//TODO
-		return 0;
+		return getHealthInsuranceAndTaxBasis() * 0.2;
 	}
 
 	@Override
 	double getExemptedValue() {
-		//TODO
 		return 0;
 	}
 }
